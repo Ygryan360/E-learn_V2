@@ -1,0 +1,212 @@
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter-VariableFont_slnt\,wght.ttf);
+}
+
+/* 
+* Déclaration des variables
+*/
+:root {
+  --steel-pink: #c200c8ff;
+  --blue-dark: #085ebfff;
+  --footer-dark: rgb(3, 47, 97);
+  --black: #080705;
+  --black-2: #121212;
+  --white-blue: #0077d0ff;
+  --text-secondary: #474747;
+  --light-text: #ddd;
+  --text-font: "Inter", sans-serif;
+  --bg-second: #edf0f7;
+  --text-color: #202020;
+}
+
+/*
+* Initialisation
+*/
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+}
+/*
+* Classes personnalisées
+*/
+.d-flex {
+  display: flex !important;
+}
+.btn{
+  color: #fff;
+  background-color: var(--white-blue);
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: 0.25s ease-in-out;
+}
+.btn:hover{
+  background-color: var(--blue-dark);
+}
+
+/* 
+* Barre de navigation
+*/
+header nav{
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  height: 3rem;
+  box-shadow: 0 0 10px #00000020;
+}
+.nav__logo{
+  align-items: center;
+  text-decoration: none;
+}
+.nav__logo h1{
+ font-weight: 800;
+ color: var(--steel-pink);
+}
+.nav__logo img{
+  height: 3rem;
+  margin-right: 1rem;
+}
+.nav__menu__item{
+  list-style: none;
+  padding: 1rem;
+}
+.nav__menu__item a{
+  transition: 0.25s ease-in-out;
+  text-decoration: none;
+  color: var(--text-color);
+}
+.nav__menu__item a:hover{
+  color: var(--blue-dark);
+}
+.current{
+  font-weight: 700;
+  color: var(--blue-dark) !important;
+}
+
+/* 
+* Page d'accueil no auth
+*/
+.welcome{
+  min-height: 500px;
+  justify-content: center;
+  flex-direction: column;
+  padding: 4rem;
+  background-image: url(../img/Université-de-Lomé-Togo-orientation-bacheliers.jpg);
+  background-size: cover;
+  backdrop-filter: blur(100px);
+}
+.welcome__title{
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 1rem 0;
+}
+.welcome__title span{
+  background-color: var(--steel-pink);
+  font-weight: 700;
+  padding: 0 1rem;
+}
+.welcome__text{
+  font-size: 1.5rem;
+  color: var(--steel-pink);
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+/* 
+* Inscription et connexion
+*/
+.gotologin{
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--bg-second);
+}
+.gotologin__title{
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+.gotologin__text{
+  color: var(--text-secondary);
+}
+.gotologin__box{
+  margin: 2rem 0;
+  justify-content: center;
+}
+.gotologin__box__item{
+  background-color: #fff;
+  margin: 1rem;
+  padding: 2rem;  
+  box-shadow: 0 0 10px #76a1ff20;
+  width: 250px;
+}
+.gotologin__box__item h2{
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+.gotologin__box__item p{
+  color: var(--text-secondary);
+  margin: 1rem 0 2rem 0;
+}
+
+/* 
+* Footer
+*/
+footer{
+  padding: 3rem;
+  justify-content: space-between;
+  background-color: var(--footer-dark);
+  color: var(--light-text);
+  font-size: 1rem;
+  align-items: center;
+}
+#scrollToTop{
+  height: 40px;
+  width: 40px;
+  border: 0;
+  border-radius: 4px;
+  color: #fff;
+  background-color: var(--steel-pink);
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: 0.25s ease-in-out;
+}
+#scrollToTop:hover{
+  background-color: var(--white-blue);
+}
+
+/*
+* Responsivité
+*/
+@media all and (max-width: 608px) {
+  .nav__menu{
+    display: none !important;
+  }
+  .welcome{
+    padding: 1rem;
+  }
+  .welcome__title{
+    font-size: 3rem;
+    word-wrap: break-word;
+  }
+  .gotologin__box{
+    flex-direction: column;
+  }
+  .gotologin__box__item{
+    width: 80%;
+    margin: 1rem 0;
+  }
+  footer{
+    padding: 1rem;
+    flex-direction: column;
+  }
+  footer button{
+    margin-top: 2rem;
+  }
+}
