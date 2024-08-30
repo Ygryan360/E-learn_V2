@@ -3,7 +3,14 @@ function refreshpage() {
 }
 
 // setInterval(refreshpage, 5000);
-
-function scrollToTop() {
+let goToTopBtn = document.getElementById("scrollToTop");
+window.onscroll =  () =>{
+  if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+    goToTopBtn.style.display = "block";
+  } else {
+    goToTopBtn.style.display = "none";
+  }
+}
+  function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
