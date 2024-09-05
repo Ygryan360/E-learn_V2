@@ -1,3 +1,26 @@
+<?php
+session_start();
+require_once './functions.php';
+if (!empty($_POST)) {
+    require_once './dbconnect.php';
+    $query = "SELECT * FROM users";
+    $pdostatment = $pdo->prepare($query);
+    $pdostatment->execute();
+    $users = $pdostatment->fetchall(PDO::FETCH_ASSOC);
+    $pdostatment->closeCursor();
+    foreach ($users as $user) {
+        if ($user['username'] === $_POST['username'] && $user['password'] === $_POST['password']) {
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['user_role'] = $user['role'];
+            $_SESSION['user_id'] = $user['id'];
+            $url = "dashboard.php";
+            redirectToUrl($url);
+        }
+    }
+    $url = "login.php";
+    redirectToUrl($url);
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -7,14 +30,14 @@
     <title>E-learn V2 | S'inscrire</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINEARICONS CSS -->
-    <link rel="stylesheet" href="assets/fonts/linearicons/style.css">
-    <link rel="stylesheet" href="assets/css/login.register.css">
+    <link rel="stylesheet" href="./assets/fonts/linearicons/style.css">
+    <link rel="stylesheet" href="./assets/css/login.register.css">
     <!-- FavIcons -->
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png" />
-    <link rel="manifest" href="assets/img/site.webmanifest" />
+    <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon-16x16.png" />
+    <link rel="manifest" href="./assets/img/site.webmanifest" />
     <style>
         .error-message {
             color: #ff0000;
@@ -46,7 +69,7 @@
                 <div class="error-message" id="passwordError"></div>
                 <a href="./register.html">Déjà inscrit ? &rarr;</a>
                 <button type="submit">
-                    <span>S'inscrire</span>
+                    <span>Se Connecter</span>
                 </button>
             </form>
             <img src="./assets/img/image-2.png" alt="" class="image-2">

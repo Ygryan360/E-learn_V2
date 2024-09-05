@@ -31,7 +31,7 @@ require_once 'sidebar.php';
             ?>
                     <div class="col fade-in-up">
                         <div class="card course-shadow h-100">
-                            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="assets/img/noimg.jpg">
+                            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="./assets/img/noimg.jpg">
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <h5><a class="text-decoration-none" href="course.php?course=<?= $course['course_id'] ?>"><?= $course['course_name'] ?></a></h5>
                                 <p class="card-text">

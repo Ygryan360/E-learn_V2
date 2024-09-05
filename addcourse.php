@@ -13,11 +13,11 @@ if (!empty($_POST)):
     $addCorseQuery = "INSERT INTO `courses` (`id`, `name`, `description`, `category_id`, `author_id`, `added_date`, `content`) VALUES (NULL, :course_name, :course_desc, :category, '1', :added_date, :course_content);";
     $insertStatment = $pdo->prepare($addCorseQuery);
     $insertStatment->execute([
-        'course_name'=> $postData['courseTitle'],
-        'course_desc'=> $postData['courseDescription'],
-        'category'=> $postData['courseCategory'],
-        'added_date'=> date("Y-m-d"),
-        'course_content'=> $postData['content'],
+        'course_name' => $postData['courseTitle'],
+        'course_desc' => $postData['courseDescription'],
+        'category' => $postData['courseCategory'],
+        'added_date' => date("Y-m-d"),
+        'course_content' => $postData['content'],
     ]);
     $insertStatment->closeCursor();
     $url = "dashboard.php";
@@ -33,8 +33,8 @@ endif;
     <meta name="description" content="">
     <title>Ajouter un nouveau cours - E-Learn V2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="./assets/css/bootstrap.css" rel="stylesheet">
+    <link href="./assets/css/style.css" rel="stylesheet">
     <script src="https://cdn.tiny.cloud/1/cy4k0rh0mk3w3hlzgj65denqpu7jxc3fsm98lpynubakzsi7/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
@@ -64,7 +64,7 @@ endif;
     </script>
     <!-- Custom styles  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="assets/css/dashboard.css" rel="stylesheet">
+    <link href="./assets/css/dashboard.css" rel="stylesheet">
     <!-- Custom styles -->
     <style>
         .bd-placeholder-img {
@@ -234,27 +234,27 @@ endif;
             <!-- sideBar -->
             <?php require_once 'sidebar.php' ?>
             <h1 class="text-center my-3">Ajouter un nouveau cours</h1>
-                <div class="container my-3 card p-3 course-shadow">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <label for="courseTitle" class="form-label">Titre :</label>
-                        <input type="text" id="courseTitle" name="courseTitle" required class="form-control">
-                        <br>
-                        <label for="courseDescription" class="form-label">Description :</label>
-                        <textarea type="text" id="courseDescription" name="courseDescription" required class="form-control"></textarea>
-                        <br>
-                        <label for="courseCategory" class="form-label">Catégorie :</label>
-                        <select id="courseCategory" name="courseCategory" class="form-control">
-                            <?php foreach ($categories as $category): ?>
-                                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
-                            <?php endforeach;  ?>
-                        </select><br>
+            <div class="container my-3 card p-3 course-shadow">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <label for="courseTitle" class="form-label">Titre :</label>
+                    <input type="text" id="courseTitle" name="courseTitle" required class="form-control">
+                    <br>
+                    <label for="courseDescription" class="form-label">Description :</label>
+                    <textarea type="text" id="courseDescription" name="courseDescription" required class="form-control"></textarea>
+                    <br>
+                    <label for="courseCategory" class="form-label">Catégorie :</label>
+                    <select id="courseCategory" name="courseCategory" class="form-control">
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                        <?php endforeach;  ?>
+                    </select><br>
 
-                        <label for="content" class="form-label">Contenu :</label>
-                        <textarea id="content" name="content" class="form-control"></textarea><br>
+                    <label for="content" class="form-label">Contenu :</label>
+                    <textarea id="content" name="content" class="form-control"></textarea><br>
 
-                        <button type="submit" class="btn btn-primary">Publier</button>
-                    </form>
-                </div>
+                    <button type="submit" class="btn btn-primary">Publier</button>
+                </form>
+            </div>
             </main>
         </div>
     </div>

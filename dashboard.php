@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'dbconnect.php';
 $query = "SELECT courses.id AS course_id, courses.name AS course_name, courses.description AS course_desc, categories.name AS category FROM courses JOIN categories ON courses.category_id = categories.id;";
 $pdostatment = $pdo->prepare($query);
@@ -18,7 +19,7 @@ require_once 'sidebar.php';
             <?php foreach ($courses as $course): ?>
                 <div class="col fade-in-up">
                     <div class="card course-shadow h-100">
-                        <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="assets/img/noimg.jpg">
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="./assets/img/noimg.jpg">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <h5><a class="text-decoration-none" href="course.php?course=<?= $course['course_id'] ?>"><?= $course['course_name'] ?></a></h5>
                             <p class="card-text">

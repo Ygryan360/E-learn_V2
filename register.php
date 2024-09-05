@@ -1,8 +1,19 @@
 <?php
+require_once './functions.php';
 if(!empty($_POST)){
-    echo "succes";
-    
-    die();
+    require_once './dbconnect.php';
+    $query = "INSERT INTO `users` (`id`, `username`, `phone`, `email`, `password`, `role`, `register_date`) VALUES (NULL, :username, :phone, :email, :password, 'student', :register_date)";
+    $pdostatment = $pdo->prepare($query);
+    $pdostatment->execute([
+        'username' => $_POST['username'],
+        'phone' => $_POST['number'],
+        'email' => $_POST['email'],
+        'password' => $_POST['password'],
+        'register_date' => date("Y-m-d")
+    ]);
+    $pdostatment->closeCursor();
+    $url = "login.php";
+    redirectToUrl($url);
 }
 ?>
 
@@ -21,7 +32,7 @@ if(!empty($_POST)){
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/android-chrome-192x192.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon-16x16.png" />
-    <link rel="manifest" href="assets/img/site.webmanifest" />
+    <link rel="manifest" href="./assets/img/site.webmanifest" />
     <style>
         .error-message {
             color: #ff0000;
