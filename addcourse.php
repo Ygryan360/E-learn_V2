@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr" data-bs-theme="auto">
 <?php
+require_once './functions.php';
 require_once './dbconnect.php';
 $getCategoryQuery = "SELECT name, id FROM categories";
 $pdostatment = $pdo->prepare($getCategoryQuery);
@@ -21,14 +20,18 @@ if (!empty($_POST)):
         'course_content'=> $postData['content'],
     ]);
     $insertStatment->closeCursor();
+    $url = "dashboard.php";
+    redirectToUrl($url);
 endif;
 ?>
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="auto">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title>Tableau de Bord - E-Learn V2</title>
+    <title>Ajouter un nouveau cours - E-Learn V2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
@@ -42,7 +45,7 @@ endif;
                 'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
                 // Your account includes a free trial of TinyMCE premium features
                 // Try the most popular premium features until Sep 16, 2024:
-                'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
+                'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
             ],
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
@@ -230,16 +233,15 @@ endif;
         <div class="row">
             <!-- sideBar -->
             <?php require_once 'sidebar.php' ?>
-            <!-- Cours -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-second">
+            <h1 class="text-center my-3">Ajouter un nouveau cours</h1>
                 <div class="container my-3 card p-3 course-shadow">
-                    <h1>Ajouter un nouveau cours</h1>
                     <form action="" method="post" enctype="multipart/form-data">
                         <label for="courseTitle" class="form-label">Titre :</label>
-                        <input type="text" id="courseTitle" name="courseTitle" required class="form-control"><br><br>
+                        <input type="text" id="courseTitle" name="courseTitle" required class="form-control">
+                        <br>
                         <label for="courseDescription" class="form-label">Description :</label>
-                        <input type="text" id="courseDescription" name="courseDescription" required class="form-control"><br><br>
-
+                        <textarea type="text" id="courseDescription" name="courseDescription" required class="form-control"></textarea>
+                        <br>
                         <label for="courseCategory" class="form-label">Catégorie :</label>
                         <select id="courseCategory" name="courseCategory" class="form-control">
                             <?php foreach ($categories as $category): ?>

@@ -1,6 +1,6 @@
-    <footer class="fade-in-up">
-      <div class="d-flex container justify-content-center py-3">
-        <p>
+    <footer>
+      <div class="d-flex container justify-content-center py-3 ">
+        <p class="fade-in-up">
           &copy; 2024 &lozf; E-Learn V2 | By 360 Corp.
         </p>
         <button id="scrollToTop" onclick="scrollToTop()">
@@ -14,6 +14,5 @@
     </footer>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/bootstrap.js"></script>
-    <script src="./assets/js/dashboard.js"></script>
   </body>
 </html>

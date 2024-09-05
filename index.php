@@ -26,7 +26,7 @@
                     </svg>
                     <h2>Connectez vous</h2>
                     <p class="m-2">Vous êtes déjà inscrit à l'université de lomé ? Connectez-vous à votre compte</p>
-                    <a class="btn btn-primary" href="login.html">Se connecter</a>
+                    <a class="btn btn-primary" href="./login.php">Se connecter</a>
                 </div>
                 <div class="gotologin__box__item fade-in-up m-2 pt-5 pb-5 col">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add"
@@ -37,7 +37,7 @@
                     </svg>
                     <h2>Inscrivez vous</h2>
                     <p class="m-2">Vous êtes nouveau à l'université de lomé ? Connectez-vous à votre compte</p>
-                    <a class="btn btn-primary" href="register.html">S'inscrire</a>
+                    <a class="btn btn-primary" href="./register.php">S'inscrire</a>
                 </div>
             </div>
         </div>

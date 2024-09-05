@@ -1,19 +1,10 @@
 <?php
-/**
- * Cette fonction vérifie si l'id de l'url est présent parmis les ids des cours
- */
-function verifyId(array $idsArr, string $id):bool{
-    foreach($idsArr as $idN){
-        if($idN['id'] === $id){
-            return true;
-        }
-    }
-    return false;
+
+require_once './functions.php';
+$redirectUrl = "dashboard.php";
+if (!isset($_GET['course'])) {
+    redirectToUrl($redirectUrl);
 }
-if(!isset($_GET['course'])) {
-    header("Location: ./dashboard.php");
-    exit();
-} 
 $course_id = $_GET['course'];
 // Récuperer toutes les ids des cours
 require_once 'dbconnect.php';
@@ -23,9 +14,8 @@ $getIdsStatment->execute();
 $ids = $getIdsStatment->fetchAll(PDO::FETCH_ASSOC);
 $getIdsStatment->closeCursor();
 // Vérifier si l'id de l'url correspond à un cours
-if (!verifyId($ids, $course_id)){
-    header("Location: ./dashboard.php");
-    exit();
+if (!verifyId($ids, $course_id)) {
+    redirectToUrl($redirectUrl);
 }
 // Si oui, afficher le cours
 $query = "SELECT * FROM courses WHERE courses.id = :id";
@@ -40,13 +30,13 @@ require_once 'dashboard_header.php';
 // sideBar
 require_once 'sidebar.php';
 ?>
+<div class="d-flex-space-betwean">
+    <h1 class="text-center mt-5 mb-4 fw-bold fs-1"><?= $course["name"]; ?></h1>
 
-<!-- Cours -->
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-second">
-    <div class="my-3 p-4 container card fade-in-up course-shadow">
-        <h2><?= $course["name"]; ?></h2>
-        <?= $course["content"]; ?>
-    </div>
+</div>
+<div class="my-3 p-4 container card fade-in-up course-shadow">
+    <?= $course["content"]; ?>
+</div>
 </main>
 </div>
 </div>

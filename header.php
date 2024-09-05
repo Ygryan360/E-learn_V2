@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="assets/css/bootstrap.css" />
     <!-- FavIcons -->
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <script src="assets/js/main.js" defer></script>
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/android-chrome-192x192.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png" />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="assets/img/favicon-16x16.png"
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="assets/img/favicon-16x16.png"
     />
     <link rel="manifest" href="assets/img/site.webmanifest" />
+    <script src="assets/js/main.js" defer></script>
     <title>E-learn V2</title>
   </head>
 

@@ -34,11 +34,11 @@ $pdostatment->closeCursor();
                 <ul class="nav flex-column mb-auto">
                     <?php foreach ($categories as $category): ?>
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2" href="categories.php?category=<?php echo $category['id'] ?>">
+                            <a class="nav-link d-flex align-items-center gap-2" href="categories.php?category=<?= $category['id'] ?>">
                                 <svg class="bi">
                                     <use xlink:href="#file-earmark-text" />
                                 </svg>
-                                <?php echo $category['name'] ?>
+                                <?= $category['name'] ?>
                             </a>
                         </li>
                     <?php endforeach; ?>
@@ -67,3 +67,6 @@ $pdostatment->closeCursor();
         </div>
     </div>
 </div>
+
+<!-- Cours -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-second min-vh-100">
