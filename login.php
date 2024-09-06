@@ -67,7 +67,7 @@ if (!empty($_POST)) {
                         required>
                 </div>
                 <div class="error-message" id="passwordError"></div>
-                <a href="./register.html">Déjà inscrit ? &rarr;</a>
+                <a href="./register.php">Pas encore inscrit ? &rarr;</a>
                 <button type="submit">
                     <span>Se Connecter</span>
                 </button>

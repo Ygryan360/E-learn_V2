@@ -1,6 +1,7 @@
 <?php
+session_start();
 require_once './functions.php';
-if(!empty($_POST)){
+if (!empty($_POST)) {
     require_once './dbconnect.php';
     $query = "INSERT INTO `users` (`id`, `username`, `phone`, `email`, `password`, `role`, `register_date`) VALUES (NULL, :username, :phone, :email, :password, 'student', :register_date)";
     $pdostatment = $pdo->prepare($query);
@@ -79,7 +80,7 @@ if(!empty($_POST)){
                         id="confirmPassword" name="confirmPassword" required>
                 </div>
                 <div class="error-message" id="confirmPasswordError"></div>
-                <a href="login.html">Déjà inscrit ? &rarr;</a>
+                <a href="login.php">Déjà inscrit ? &rarr;</a>
                 <button type="submit">
                     <span>S'inscrire</span>
                 </button>
