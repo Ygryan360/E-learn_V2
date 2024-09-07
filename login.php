@@ -33,7 +33,7 @@ if (!empty($_POST)) {
 
 <head>
     <meta charset="utf-8">
-    <title>E-learn V2 | S'inscrire</title>
+    <title>E-learn V2 | Connexion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- LINEARICONS CSS -->
     <link rel="stylesheet" href="./assets/fonts/linearicons/style.css">
