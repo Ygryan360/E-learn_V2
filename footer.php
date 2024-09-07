@@ -2,7 +2,7 @@
       <div class="d-flex container justify-content-center py-3 ">
         <p class="fade-in-up text-center">
           &copy; 2024 - E-Learn V2 | By YGR <br>
-          Version 1.1.6
+          Version 1.1.6.2
         </p>
         <button id="scrollToTop" onclick="scrollToTop()">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up"

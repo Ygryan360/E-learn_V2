@@ -31,7 +31,7 @@ require_once 'dashboard_header.php';
 require_once 'sidebar.php';
 ?>
 <div class="d-flex-space-betwean">
-    <div class="my-3 course-header d-flex justify-content-between course-shadow">
+    <div class="my-3 course-header d-flex  flex-wrap justify-content-between course-shadow">
         <h1><?= $course["name"]; ?></h1>
         <p>
             Créé par : <strong><?= $course["username"]; ?></strong> <br>
@@ -40,7 +40,7 @@ require_once 'sidebar.php';
     </div>
 
 </div>
-<div class="my-3 p-4 container card fade-in-up course-shadow">
+<div class="my-3 p-4 container card fade-in-up overflow-scroll course-shadow">
     <?= $course["content"]; ?>
 </div>
 <?php
@@ -66,7 +66,7 @@ $pdostatmt2->execute(["id" => $course_id]);
 $viewMaj = $pdostatmt2->fetch();
 $pdostatmt2->closeCursor();
 ?>
-<div class="my-3 p-4 d-flex bg-blanc justify-content-between fade-in-up course-shadow">
+<div class="my-3 p-4 d-flex flex-wrap bg-blanc justify-content-between fade-in-up course-shadow">
     <p class="m-0">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
             <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
