@@ -10,7 +10,28 @@ function redirectToUrl(string $url)
 }
 
 /**
+ * Redirige l'utilisateur vers le tableau de bord
+ */
+function redirectToDashboard()
+{
+    header('Location: dashboard.php');
+    exit();
+}
+
+/**
+ * Redirige l'utilisateur vers la page de connexion
+ */
+function redirectToLogin()
+{
+    header('Location: login.php');
+    exit();
+}
+
+/**
  * Cette fonction vérifie si l'id de l'url est présent parmis les ids des catégories
+ * @param array $allCategories : Le tableau contenant tous les ID
+ * @param string $urlId : L'id contenu dans l'URL
+ * @return bool true  si c'est trouvé
  */
 function verifyCategory(array $allCategories, string $urlId): bool
 {
@@ -45,7 +66,54 @@ function verifyLoggedStatus()
         !isset($_SESSION['user_role']) &&
         !isset($_SESSION['user_id'])
     ) {
-        $url = "login.php";
-        redirectToUrl($url);
+        redirectToLogin();
     }
+}
+
+/**
+ * Retourne True si l'utilisateur est connecté et false sinon
+ */
+function returnLoggedStatus() :bool
+{
+    if (
+        isset($_SESSION['username']) &&
+        isset($_SESSION['user_role']) &&
+        isset($_SESSION['user_id'])
+    ) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Verifie si l'utilisateur a le rôle teacher
+ */
+function isATeacher () :bool
+{
+    if($_SESSION['user_role'] === 'teacher'){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Verifie si l'utilisateur a le rôle d'admin
+ */
+function isAnAdmin () :bool
+{
+    if($_SESSION['user_role'] === 'admin'){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Verifie si l'utilisateur a le rôle de student
+ */
+function isAStudent () :bool
+{
+    if($_SESSION['user_role'] === 'student'){
+        return true;
+    }
+    return false;
 }

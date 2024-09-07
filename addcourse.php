@@ -1,5 +1,8 @@
 <?php
+session_start();
 require_once './functions.php';
+verifyLoggedStatus();
+if(isAStudent()){redirectToDashboard();};
 require_once './dbconnect.php';
 $getCategoryQuery = "SELECT name, id FROM categories";
 $pdostatment = $pdo->prepare($getCategoryQuery);
@@ -10,18 +13,17 @@ $pdostatment->closeCursor();
 if (!empty($_POST)):
     $postData = $_POST;
     date_default_timezone_set('UTC');
-    $addCorseQuery = "INSERT INTO `courses` (`id`, `name`, `description`, `category_id`, `author_id`, `added_date`, `content`) VALUES (NULL, :course_name, :course_desc, :category, '1', :added_date, :course_content);";
+    $addCorseQuery = "INSERT INTO `courses` (`id`, `name`, `description`, `category_id`, `author_id`, `update_date`, `content`) VALUES (NULL, :course_name, :course_desc, :category, '1', :update_date, :course_content);";
     $insertStatment = $pdo->prepare($addCorseQuery);
     $insertStatment->execute([
         'course_name' => $postData['courseTitle'],
         'course_desc' => $postData['courseDescription'],
         'category' => $postData['courseCategory'],
-        'added_date' => date("Y-m-d"),
+        'update_date' => date("Y-m-d"),
         'course_content' => $postData['content'],
     ]);
     $insertStatment->closeCursor();
-    $url = "dashboard.php";
-    redirectToUrl($url);
+    redirectToDashboard();
 endif;
 ?>
 <!DOCTYPE html>

@@ -1,6 +1,9 @@
 <?php
 session_start();
 require_once './functions.php';
+if (returnLoggedStatus()) {
+    redirectToDashboard();
+}
 if (!empty($_POST)) {
     require_once './dbconnect.php';
     $query = "INSERT INTO `users` (`id`, `username`, `phone`, `email`, `password`, `role`, `register_date`) VALUES (NULL, :username, :phone, :email, :password, 'student', :register_date)";
@@ -13,8 +16,7 @@ if (!empty($_POST)) {
         'register_date' => date("Y-m-d")
     ]);
     $pdostatment->closeCursor();
-    $url = "login.php";
-    redirectToUrl($url);
+    redirectToLogin();
 }
 ?>
 

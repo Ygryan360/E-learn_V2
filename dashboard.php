@@ -1,10 +1,9 @@
 <?php
 session_start();
-var_dump($_SESSION);
 require_once './functions.php';
 verifyLoggedStatus();
 require_once 'dbconnect.php';
-$query = "SELECT courses.id AS course_id, courses.name AS course_name, courses.description AS course_desc, categories.name AS category FROM courses JOIN categories ON courses.category_id = categories.id;";
+$query = "SELECT courses.id AS course_id, courses.name AS course_name, courses.description AS course_desc, categories.name AS category FROM courses JOIN categories ON courses.category_id = categories.id ORDER BY `courses`.`id` DESC;";
 $pdostatment = $pdo->prepare($query);
 $pdostatment->execute();
 $courses = $pdostatment->fetchall(PDO::FETCH_ASSOC);
@@ -30,8 +29,7 @@ require_once 'sidebar.php';
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="course.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-secondary" id="lectureBtn">Lire</a>
-                                    <a href="course.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-secondary">Editer</a>
+                                    <a href="course.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-primary" id="lectureBtn">Lire</a>
                                 </div>
                                 <small class="text-body-secondary"><?= $course['category'] ?></small>
                             </div>
@@ -44,18 +42,6 @@ require_once 'sidebar.php';
 </div>
 </main>
 </div>
-</div>
-<div class="logout-modal">
-    <div class="logout-modal__container">
-        <h1>Confirmation !</h1>
-        <p class="text-center">
-            Voulez vous vraiment vous déconnecter ?
-        </p>
-        <div class="actions_btns d-flex justify-content-between px-3">
-            <button class="btn btn-secondary">Annuler</button>
-            <a href="./logout.php" class="btn btn-danger">Déconnexion</a>
-        </div>
-    </div>
 </div>
 <?php
 require_once "./footer.php"

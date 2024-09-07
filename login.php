@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once './functions.php';
+if (returnLoggedStatus()) {
+    redirectToDashboard();
+}
+
 if (!empty($_POST)) {
     require_once './dbconnect.php';
     $query = "SELECT * FROM users";
@@ -9,16 +13,18 @@ if (!empty($_POST)) {
     $users = $pdostatment->fetchall(PDO::FETCH_ASSOC);
     $pdostatment->closeCursor();
     foreach ($users as $user) {
-        if ($user['username'] === $_POST['username'] && $user['password'] === $_POST['password']) {
+        if (
+            $user['username'] === $_POST['username'] &&
+            $user['password'] === $_POST['password']
+        ) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_role'] = $user['role'];
             $_SESSION['user_id'] = $user['id'];
-            $url = "dashboard.php";
-            redirectToUrl($url);
+            redirectToDashboard();
+        } else {
+            $error = "Identifiant ou Mot de passe incorrect !";
         }
     }
-    $url = "login.php";
-    redirectToUrl($url);
 }
 ?>
 
@@ -55,9 +61,15 @@ if (!empty($_POST)) {
             <form id="registerForm" action="" method="post">
                 <h3>Connexion</h3>
                 <div class="form-holder">
+                    <?php if (isset($error)): ?>
+                        <div class="error-message">
+                            <?= $error; ?>
+                        </div>
+                    <?php endif; ?>
                     <span class="lnr lnr-user"></span>
-                    <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="username"
-                        name="username" required>
+                    <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="username" name="username" required <?php if (isset($_POST['username'])) {
+                                                                                                                                        echo 'value="' . $_POST['username'] . '"';
+                                                                                                                                    } ?>>
                 </div>
                 <div class="error-message" id="usernameError"></div>
 

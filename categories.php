@@ -1,6 +1,7 @@
 <?php
-
+session_start();
 require_once './functions.php';
+verifyLoggedStatus();
 require_once 'dbconnect.php';
 // Récuperer les cours
 $query = "SELECT courses.id AS course_id, courses.name AS course_name, courses.description AS course_desc, categories.name AS category, courses.category_id AS category_id FROM courses JOIN categories ON courses.category_id = categories.id;";
@@ -15,7 +16,6 @@ $ctgstatment = $pdo->prepare($getCategoryInfo);
 $ctgstatment->execute(['id' => $_GET['category']]);
 $ctgName = $ctgstatment->fetch();
 $ctgstatment->closeCursor();
-$category = $_GET['category'];
 $title = $ctgName['name'];
 // Header
 require_once 'dashboard_header.php';
@@ -39,8 +39,7 @@ require_once 'sidebar.php';
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="lectureBtn">Lire</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Editer</button>
+                                        <a href="course.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-primary" >Lire</a>
                                     </div>
                                     <small class="text-body-secondary"><?= $course['category'] ?></small>
                                 </div>

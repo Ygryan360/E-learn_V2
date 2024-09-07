@@ -35,6 +35,10 @@
 .bg-second{
   background-color: var(--bg-second);
 }
+.bg-blanc{ 
+  background-color: #fff;
+  border-radius: 4px;
+}
 
 .fade-in {
     opacity: 0;
@@ -60,7 +64,22 @@
     transform: translateY(0);
 }
 
-
+.course-header{
+  background-color: var(--blue-dark) !important;
+  padding: 1rem;
+  border-radius: 4px;
+  align-items: center;
+}
+.course-header h1{
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+}
+.course-header p {
+  margin: 0;
+  color: #fff;
+}
 
 /* 
 * Barre de navigation
