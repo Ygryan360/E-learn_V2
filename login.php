@@ -48,7 +48,16 @@ if (!empty($_POST)) {
         .error-message {
             color: #ff0000;
             font-size: 15px;
-            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .new-register {
+            font-size: 15px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px 0 0 4px;
+            background-color: #00000010;
+            border-left: 4px solid #00C853;
         }
     </style>
 </head>
@@ -61,11 +70,6 @@ if (!empty($_POST)) {
             <form id="registerForm" action="" method="post">
                 <h3>Connexion</h3>
                 <div class="form-holder">
-                    <?php if (isset($error)): ?>
-                        <div class="error-message">
-                            <?= $error; ?>
-                        </div>
-                    <?php endif; ?>
                     <span class="lnr lnr-user"></span>
                     <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="username" name="username" required <?php if (isset($_POST['username'])) {
                                                                                                                                         echo 'value="' . $_POST['username'] . '"';
@@ -83,6 +87,18 @@ if (!empty($_POST)) {
                 <button type="submit">
                     <span>Se Connecter</span>
                 </button>
+                <?php if (isset($error)): ?>
+                    <div class="error-message">
+                        <?= $error; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (isset($_GET['n'])):
+                ?>
+                    <div class="new-register">
+                        Votre compte à été bien créé, veuillez saisir vos identifiants
+                    </div>
+                <?php endif;
+                ?>
             </form>
             <img src="./assets/img/image-2.png" alt="" class="image-2">
         </div>

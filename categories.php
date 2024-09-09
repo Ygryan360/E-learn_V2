@@ -11,7 +11,7 @@ $courses = $pdostatment->fetchall(PDO::FETCH_ASSOC);
 $pdostatment->closeCursor();
 
 // Récuperer le nom de la catégorie
-$getCategoryInfo = 'SELECT name FROM `categories` WHERE id = :id;';
+$getCategoryInfo = 'SELECT * FROM `categories` WHERE id = :id;';
 $ctgstatment = $pdo->prepare($getCategoryInfo);
 $ctgstatment->execute(['id' => $_GET['category']]);
 $ctgName = $ctgstatment->fetch();
@@ -24,7 +24,13 @@ require_once 'sidebar.php';
 ?>
 <div class="album py-3">
     <div class="container">
-        <h1 class="text-center mb-3"><?= $ctgName['name'] ?></h1>
+        <div class="my-3 course-header d-flex  flex-wrap justify-content-between course-shadow">
+            <h1><?= $ctgName['name'] ?></h1>
+            <p>
+                <?= $ctgName['description'] ?>
+            </p>
+        </div>
+
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <?php foreach ($courses as $course):
                 if (verifyCategory($course, $_GET['category'])):
@@ -39,7 +45,7 @@ require_once 'sidebar.php';
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="course.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-primary" >Lire</a>
+                                        <a href="course.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-primary">Lire</a>
                                     </div>
                                     <small class="text-body-secondary"><?= $course['category'] ?></small>
                                 </div>

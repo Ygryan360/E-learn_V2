@@ -2,7 +2,9 @@
 session_start();
 require_once './functions.php';
 verifyLoggedStatus();
-if(isAStudent()){redirectToDashboard();};
+if (isAStudent()) {
+    redirectToDashboard();
+};
 require_once './dbconnect.php';
 $getCategoryQuery = "SELECT name, id FROM categories";
 $pdostatment = $pdo->prepare($getCategoryQuery);
@@ -13,14 +15,15 @@ $pdostatment->closeCursor();
 if (!empty($_POST)):
     $postData = $_POST;
     date_default_timezone_set('UTC');
-    $addCorseQuery = "INSERT INTO `courses` (`id`, `name`, `description`, `category_id`, `author_id`, `update_date`, `content`) VALUES (NULL, :course_name, :course_desc, :category, '1', :update_date, :course_content);";
+    $addCorseQuery = "INSERT INTO `courses` (`id`, `name`, `description`, `category_id`, `author_id`, `update_date`, `content`) VALUES (NULL, :course_name, :course_desc, :category, :author, :update_date, :course_content);";
     $insertStatment = $pdo->prepare($addCorseQuery);
     $insertStatment->execute([
-        'course_name' => $postData['courseTitle'],
-        'course_desc' => $postData['courseDescription'],
-        'category' => $postData['courseCategory'],
+        'course_name' => addslashes($postData['courseTitle']),
+        'course_desc' => addslashes($postData['courseDescription']),
+        'category' => addslashes($postData['courseCategory']),
+        'author' => $_SESSION['user_id'],
         'update_date' => date("Y-m-d"),
-        'course_content' => $postData['content'],
+        'course_content' => addslashes($postData['content']),
     ]);
     $insertStatment->closeCursor();
     redirectToDashboard();
@@ -34,6 +37,16 @@ endif;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <title>Ajouter un nouveau cours - E-Learn V2</title>
+    <!-- FavIcons -->
+    <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32x32.png" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="./assets/img/favicon-16x16.png" />
+    <link rel="manifest" href="./assets/img/site.webmanifest" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="./assets/css/bootstrap.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">

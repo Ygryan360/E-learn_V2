@@ -5,37 +5,34 @@ verifyLoggedStatus();
 if (isAStudent()) {
     redirectToDashboard();
 }
-require_once './dbconnect.php';
-$getCategoryQuery = "SELECT name, id FROM categories";
-$pdostatment = $pdo->prepare($getCategoryQuery);
-$pdostatment->execute();
-$categories = $pdostatment->fetchAll(PDO::FETCH_ASSOC);
-$pdostatment->closeCursor();
-var_dump($categories);
-function categoryExist($allCategories, $addCategory){
-    foreach ($allCategories as $aCategory){
-        if($aCategory['name'] == $addCategory){
-            return true;
-        }
+
+if (!empty($_POST)) {
+    $postData = $_POST;
+    require_once './dbconnect.php';
+    $getCategoryQuery = "SELECT name FROM categories";
+    $pdostatment = $pdo->prepare($getCategoryQuery);
+    $pdostatment->execute();
+    $categories = $pdostatment->fetchAll(PDO::FETCH_ASSOC);
+    $pdostatment->closeCursor();
+    if (!verifyCategoryExist($categories, $postData['categoryName'])) 
+    {
+        $addCategoryQuery = "INSERT INTO `categories` (`id`, `name`, `description`, `author_id`, `added_date`) VALUES (NULL, :name, :description, :author_id, :add_date)";
+        $insertStatment = $pdo->prepare($addCategoryQuery);
+        $insertStatment->execute([
+            'name' => addslashes($postData['categoryName']),
+            'description' => addslashes($postData['categoryDescription']),
+            'author_id' => $_SESSION['user_id'],
+            'add_date' => date("Y-m-d"),
+        ]);
+        $insertStatment->closeCursor();
+        redirectToDashboard();
+    } 
+    else 
+    {
+        $error = "La catégorie <b>" . $postData['categoryName'] . "</b> existe déjà !";
     }
-    return false;
 }
 
-if (!empty($_POST)):
-    if(categoryExist($categories, $postData['name'])){echo 'Yes';}else{echo 'no';};
-    die();
-    $postData = $_POST;
-    date_default_timezone_set('UTC');
-    $addCategoryQuery = "INSERT INTO `categories` (`id`, `name`, `author`, `added_date`) VALUES (NULL, :name, :author, :add_date)";
-    $insertStatment = $pdo->prepare($addCategoryQuery);
-    $insertStatment->execute([
-        'name' => $postData['name'],
-        'author' => $_SESSION['user_id'],
-        'add_date' => date("Y-m-d"),
-    ]);
-    $insertStatment->closeCursor();
-    redirectToDashboard();
-endif;
 ?>
 <!DOCTYPE html>
 <html lang="fr" data-bs-theme="auto">
@@ -44,37 +41,20 @@ endif;
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title>Ajouter un nouveau cours - E-Learn V2</title>
+    <title>Ajouter une nouvelle catégorie - E-Learn V2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="./assets/css/bootstrap.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
-    <script src="https://cdn.tiny.cloud/1/cy4k0rh0mk3w3hlzgj65denqpu7jxc3fsm98lpynubakzsi7/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '#content',
-            plugins: [
-                // Core editing features
-                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-                // Your account includes a free trial of TinyMCE premium features
-                // Try the most popular premium features until Sep 16, 2024:
-                'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
-            ],
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            mergetags_list: [{
-                    value: 'First.Name',
-                    title: 'First Name'
-                },
-                {
-                    value: 'Email',
-                    title: 'Email'
-                },
-            ],
-            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-        });
-    </script>
+    <!-- favicons -->
+    <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32x32.png" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="./assets/img/favicon-16x16.png" />
+    <link rel="manifest" href="./assets/img/site.webmanifest" />
     <!-- Custom styles  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="./assets/css/dashboard.css" rel="stylesheet">
@@ -246,32 +226,24 @@ endif;
         <div class="row">
             <!-- sideBar -->
             <?php require_once 'sidebar.php' ?>
-            <h1 class="text-center my-3">Ajouter un nouveau cours</h1>
+            <h1 class="text-center my-3">Ajouter une nouvelle catégorie</h1>
             <div class="container my-3 card p-3 course-shadow">
-                <form action="" method="post" enctype="multipart/form-data">
-                    <label for="courseTitle" class="form-label">Titre :</label>
-                    <input type="text" id="courseTitle" name="courseTitle" required class="form-control">
+                <?php if(isset($error)): ?>
+                    <div class="alert alert-danger">
+                        <?= $error; ?>
+                    </div>
+                <?php endif; ?>
+                <form action="" method="post">
+                    <label for="categoryName" class="form-label">Nom: </label>
+                    <input type="text" id="categoryName" name="categoryName" required class="form-control">
                     <br>
-                    <label for="courseDescription" class="form-label">Description :</label>
-                    <textarea type="text" id="courseDescription" name="courseDescription" required class="form-control"></textarea>
-                    <br>
-                    <label for="courseCategory" class="form-label">Catégorie :</label>
-                    <select id="courseCategory" name="courseCategory" class="form-control">
-                        <?php foreach ($categories as $category): ?>
-                            <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
-                        <?php endforeach;  ?>
-                    </select><br>
-
-                    <label for="content" class="form-label">Contenu :</label>
-                    <textarea id="content" name="content" class="form-control"></textarea><br>
-
-                    <button type="submit" class="btn btn-primary">Publier</button>
+                    <label for="categoryDescription" class="form-label">Description :</label>
+                    <textarea type="text" id="categoryDescription" name="categoryDescription" required class="form-control"></textarea> <br>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
                 </form>
             </div>
             </main>
         </div>
     </div>
 
-    <?php
-    require_once "./footer.php"
-    ?>
+    <?php require_once "./footer.php"; ?>

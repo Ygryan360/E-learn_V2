@@ -1,7 +1,8 @@
 <?php
-
+date_default_timezone_set('UTC');
 /**
  * Cette fonction redirige l'utilisateur vers l'url contenu dans le paramètre
+ * @param string $url : L'adresse à laquelle l'utilisateur sera redirigé
  */
 function redirectToUrl(string $url)
 {
@@ -44,6 +45,8 @@ function verifyCategory(array $allCategories, string $urlId): bool
 
 /**
  * Cette fonction vérifie si l'id de l'url est présent parmis les ids des cours
+ * @param array $idsArray : Le tableau contenant tous les ids des cours
+ * @param string $urlId : L'id contenu dans l'URL
  */
 function verifyId(array $idsArray, string $urlId): bool
 {
@@ -73,7 +76,7 @@ function verifyLoggedStatus()
 /**
  * Retourne True si l'utilisateur est connecté et false sinon
  */
-function returnLoggedStatus() :bool
+function returnLoggedStatus(): bool
 {
     if (
         isset($_SESSION['username']) &&
@@ -88,9 +91,9 @@ function returnLoggedStatus() :bool
 /**
  * Verifie si l'utilisateur a le rôle teacher
  */
-function isATeacher () :bool
+function isATeacher(): bool
 {
-    if($_SESSION['user_role'] === 'teacher'){
+    if ($_SESSION['user_role'] === 'teacher') {
         return true;
     }
     return false;
@@ -99,9 +102,9 @@ function isATeacher () :bool
 /**
  * Verifie si l'utilisateur a le rôle d'admin
  */
-function isAnAdmin () :bool
+function isAnAdmin(): bool
 {
-    if($_SESSION['user_role'] === 'admin'){
+    if ($_SESSION['user_role'] === 'admin') {
         return true;
     }
     return false;
@@ -110,10 +113,52 @@ function isAnAdmin () :bool
 /**
  * Verifie si l'utilisateur a le rôle de student
  */
-function isAStudent () :bool
+function isAStudent(): bool
 {
-    if($_SESSION['user_role'] === 'student'){
+    if ($_SESSION['user_role'] === 'student') {
         return true;
     }
     return false;
+}
+
+/**
+ * Vérifie si la catégorie entrée par l'utilisateur exise déjà
+ * @param array $existsCategories : Le tableau contenant toutes les catégories existantes
+ * @param string $submitCategory : La catégorie soumise pas l'utilisateur
+ */
+function verifyCategoryExist(array $existsCategories, string $submitCategory): bool
+{
+    foreach ($existsCategories as $existCategory) {
+        if (strtolower($existCategory['name'])  === strtolower($submitCategory)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Vérifie si le cours appartient à l'utilisateur
+ * @param string $authorId : L'ID de l'auteur du cours
+ */
+function isThisMyCourse(string $authorId): bool
+{
+    if ($authorId == $_SESSION['user_id']) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Effectue une requête SQL et renvoie un Tableau Associatif
+ * @param string $query : La requête qu'on doit executer
+ * @param mixed $pdo : La varible PDO du fichier de connexion avec la DB
+ * @return array 
+ */
+function pdoFetchAssocWithQuery (string $query,mixed $pdo) : array
+{
+    $getQueryArray = $pdo->prepare($query);
+    $getQueryArray->execute();
+    $arrayResult = $getQueryArray->fetchAll(PDO::FETCH_ASSOC);
+    $getQueryArray->closeCursor();
+    return $arrayResult;
 }

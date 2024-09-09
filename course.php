@@ -38,10 +38,11 @@ require_once 'sidebar.php';
             Dernière mise à jour : <strong><?= $course["update_date"]; ?></strong>
         </p>
     </div>
-
 </div>
-<div class="my-3 p-4 container card fade-in-up overflow-scroll course-shadow">
-    <?= $course["content"]; ?>
+<div class="my-3 p-4 card fade-in-up overflow-scroll course-shadow">
+    <div class="container">
+        <?= $course["content"]; ?>
+    </div>
 </div>
 <?php
 // Récuperer le nom de la catégorie

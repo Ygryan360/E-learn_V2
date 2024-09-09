@@ -3,7 +3,7 @@ session_start();
 require_once './functions.php';
 verifyLoggedStatus();
 require_once 'dbconnect.php';
-$query = "SELECT courses.id AS course_id, courses.name AS course_name, courses.description AS course_desc, categories.name AS category FROM courses JOIN categories ON courses.category_id = categories.id ORDER BY `courses`.`id` DESC;";
+$query = "SELECT courses.id AS course_id, courses.name AS course_name, courses.description AS course_desc, courses.author_id AS author, categories.name AS category FROM courses JOIN categories ON courses.category_id = categories.id ORDER BY `courses`.`id` DESC;";
 $pdostatment = $pdo->prepare($query);
 $pdostatment->execute();
 $courses = $pdostatment->fetchall(PDO::FETCH_ASSOC);
@@ -30,6 +30,9 @@ require_once 'sidebar.php';
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a href="course.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-primary" id="lectureBtn">Lire</a>
+                                    <?php if (isThisMyCourse($course['author'])): ?>
+                                        <a href="editcourse.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-primary" id="lectureBtn">Editer</a>
+                                    <?php endif; ?>
                                 </div>
                                 <small class="text-body-secondary"><?= $course['category'] ?></small>
                             </div>
@@ -43,6 +46,4 @@ require_once 'sidebar.php';
 </main>
 </div>
 </div>
-<?php
-require_once "./footer.php"
-?>
+<?php require_once "./footer.php"; ?>
