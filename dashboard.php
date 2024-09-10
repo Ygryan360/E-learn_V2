@@ -30,8 +30,9 @@ require_once 'sidebar.php';
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a href="course.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-primary" id="lectureBtn">Lire</a>
-                                    <?php if (isThisMyCourse($course['author'])): ?>
+                                    <?php if (isThisMyCourse($course['author']) || isAnAdmin()): ?>
                                         <a href="editcourse.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-primary" id="lectureBtn">Editer</a>
+                                        <a href="deletecourse.php?course=<?= $course['course_id'] ?>" class="btn btn-sm btn-outline-danger" id="lectureBtn">Supprimer</a>
                                     <?php endif; ?>
                                 </div>
                                 <small class="text-body-secondary"><?= $course['category'] ?></small>

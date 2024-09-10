@@ -1,18 +1,17 @@
 <?php
 session_start();
 require_once './functions.php';
+verifyLoggedStatus();
 require_once './dbconnect.php';
 $course_id = $_GET['course'];
 if (!empty($_POST))
 {
-    var_dump($_POST);
     $updateCourseQuery = "UPDATE `courses` SET `name` = '". addslashes($_POST['courseTitle']) . "', `description` = '" . addslashes($_POST['courseDescription']) . "', `category_id` = '" . addslashes($_POST['courseCategory']) . "', `update_date` = '" . date('Y-m-d') . "', `content` = '" . addslashes($_POST['content']) . "' WHERE `courses`.`id` = " . $course_id;
     pdoFetchAssocWithQuery($updateCourseQuery, $pdo);
     $url = 'course.php?course=' . $course_id;
     redirectToUrl($url);
 }
 
-verifyLoggedStatus();
 if (!isset($_GET['course'])) {
     redirectToDashboard();
 }
@@ -21,7 +20,7 @@ $getIdsQuery = "SELECT id, author_id FROM courses;";
 $ids = pdoFetchAssocWithQuery($getIdsQuery, $pdo);
 $author_id = $ids[0]['author_id'];
 // Vérifier si l'id de l'url correspond à un cours
-if (!verifyId($ids, $course_id) || !isThisMyCourse($author_id)) {
+if (!verifyId($ids, $course_id) || (!isThisMyCourse($author_id) && !isAnAdmin())) {
     redirectToDashboard();
 }
 
