@@ -32,7 +32,7 @@ require_once './functions.php';
             <span class="fs-3">E-Learn V2</span>
         </a>
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Accueil</a></li>
+            <li class="nav-item"><a href="./index.php" class="nav-link active" aria-current="page">Accueil</a></li>
             <?php if (!returnLoggedStatus()): ?>
                 <li class="nav-item"><a href="./login.php" class="nav-link">Se Connecter</a></li>
                 <li class="nav-item"><a href="./register.php" class="nav-link">S'inscrire</a></li>

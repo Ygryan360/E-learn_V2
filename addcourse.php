@@ -18,12 +18,12 @@ if (!empty($_POST)):
     $addCorseQuery = "INSERT INTO `courses` (`id`, `name`, `description`, `category_id`, `author_id`, `update_date`, `content`) VALUES (NULL, :course_name, :course_desc, :category, :author, :update_date, :course_content);";
     $insertStatment = $pdo->prepare($addCorseQuery);
     $insertStatment->execute([
-        'course_name' => addslashes($postData['courseTitle']),
-        'course_desc' => addslashes($postData['courseDescription']),
-        'category' => addslashes($postData['courseCategory']),
+        'course_name' => $postData['courseTitle'],
+        'course_desc' => $postData['courseDescription'],
+        'category' => $postData['courseCategory'],
         'author' => $_SESSION['user_id'],
         'update_date' => date("Y-m-d"),
-        'course_content' => addslashes($postData['content']),
+        'course_content' => $postData['content'],
     ]);
     $insertStatment->closeCursor();
     redirectToDashboard();
@@ -247,11 +247,17 @@ endif;
     <div class="container-fluid">
         <div class="row">
             <!-- sideBar -->
-            <?php require_once 'sidebar.php' ?>
-            <h1 class="text-center my-3">Ajouter un nouveau cours</h1>
+            <?php
+            $addcourse = true;
+            require_once 'sidebar.php';
+            ?>
+            <div class="container">
+                <h1 class="my-3 fw-semibold">Ajouter un nouveau cours</h1>
+            </div>
+
             <div class="container my-3 card p-3 course-shadow">
                 <form action="" method="post" enctype="multipart/form-data">
-                    <label for="courseTitle" class="form-label">Titre :</label>
+                    <label for="courseTitle" class="form-label">Titre :</label> <br>
                     <input type="text" id="courseTitle" name="courseTitle" required class="form-control">
                     <br>
                     <label for="courseDescription" class="form-label">Description :</label>

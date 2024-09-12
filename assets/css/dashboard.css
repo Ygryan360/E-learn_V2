@@ -34,8 +34,10 @@
   font-weight: 500;
 }
 
-.sidebar .nav-link.active {
-  color: #2470dc;
+.sidebar .nav-link.active{
+  background-color: #2471dc18;
+  border-left: solid 4px #2470dc;
+  border-radius: var(--event-radius);
 }
 
 .sidebar-heading {
@@ -58,5 +60,5 @@
 }
 
 .course-shadow{
-  box-shadow: 0 0 10px rgb(3, 47, 97, 0.20);
+  box-shadow: 0 0 10px rgb(0, 0, 0, 0.10);
 }

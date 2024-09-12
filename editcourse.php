@@ -2,30 +2,44 @@
 session_start();
 require_once './functions.php';
 verifyLoggedStatus();
+if (!isset($_GET['course'])) {
+    redirectToDashboard();
+}
 require_once './dbconnect.php';
 $course_id = $_GET['course'];
-if (!empty($_POST))
-{
-    $updateCourseQuery = "UPDATE `courses` SET `name` = '". addslashes($_POST['courseTitle']) . "', `description` = '" . addslashes($_POST['courseDescription']) . "', `category_id` = '" . addslashes($_POST['courseCategory']) . "', `update_date` = '" . date('Y-m-d') . "', `content` = '" . addslashes($_POST['content']) . "' WHERE `courses`.`id` = " . $course_id;
-    pdoFetchAssocWithQuery($updateCourseQuery, $pdo);
+if (!empty($_POST)) {
+    $newTitle = $_POST['courseTitle'];
+    $newDesc = $_POST['courseDescription'];
+    $newCategory = $_POST['courseCategory'];
+    $newContent = $_POST['content'];
+    $newDate = date('Y-m-d');
+    $updateCourseQuery = "UPDATE `courses` SET `name` = :new_name, `description` = :new_desc, `category_id` = :new_cat, `update_date` = :new_date, `content` = :new_content WHERE `courses`.`id` = :course_id";
+    $updateStatment = $pdo->prepare($updateCourseQuery);
+    $updateStatment->execute([
+        'new_name' => $newTitle,
+        'new_desc' => $newDesc,
+        'new_cat' => $newCategory,
+        'new_date' => $newDate,
+        'new_content' => $newContent,
+        'course_id' => $course_id,
+    ]);
+    $updateStatment->closeCursor();
     $url = 'course.php?course=' . $course_id;
     redirectToUrl($url);
 }
 
-if (!isset($_GET['course'])) {
-    redirectToDashboard();
-}
 // Récuperer toutes les ids des cours
 $getIdsQuery = "SELECT id, author_id FROM courses;";
 $ids = pdoFetchAssocWithQuery($getIdsQuery, $pdo);
-$author_id = $ids[0]['author_id'];
-// Vérifier si l'id de l'url correspond à un cours
-if (!verifyId($ids, $course_id) || (!isThisMyCourse($author_id) && !isAnAdmin())) {
-    redirectToDashboard();
-}
-
+// Récuperer le cours demandé dans l'URL
 $getCourseQuery = "SELECT * FROM `courses` WHERE id = " . $course_id . ";";
 $course = pdoFetchAssocWithQuery($getCourseQuery, $pdo);
+// Vérifier si l'id de l'url correspond à un cours et si l'utilisateur est un admin
+if (!verifyId($ids, $course_id) && !isAnAdmin()) {
+    redirectToDashboard();
+} elseif (!isThisMyCourse($course[0]['author_id'])) {
+    redirectToDashboard();
+}
 ?>
 
 <!DOCTYPE html>
@@ -247,28 +261,33 @@ $course = pdoFetchAssocWithQuery($getCourseQuery, $pdo);
         <div class="row">
             <!-- sideBar -->
             <?php require_once 'sidebar.php' ?>
-            <h1 class="text-center my-3">Modification : <?= $course[0]['name'] ?> </h1>
-            <div class="my-3 card p-3 course-shadow">
+            <div class="course-header course-shadow mt-3">
+                <h1 class="fw-medium">
+                    Modification : <?= $course[0]['name'] ?>
+                </h1>
+            </div>
+
+            <div class="my-3 card rounded-0 p-3 course-shadow">
                 <form action="" method="post" enctype="multipart/form-data">
                     <label for="courseTitle" class="form-label">Titre :</label>
-                    <input type="text" id="courseTitle" name="courseTitle" required class="form-control" value="<?= $course[0]['name'] ?>">
+                    <input type="text" id="courseTitle" name="courseTitle" required class="form-control rounded-0" value="<?= $course[0]['name'] ?>">
                     <br>
                     <label for="courseDescription" class="form-label">Description :</label>
-                    <textarea type="text" id="courseDescription" name="courseDescription" required class="form-control"><?= $course[0]['description'] ?></textarea>
+                    <textarea type="text" id="courseDescription" name="courseDescription" required class="form-control rounded-0"><?= $course[0]['description'] ?></textarea>
                     <br>
                     <label for="courseCategory" class="form-label">Catégorie :</label>
-                    <select id="courseCategory" name="courseCategory" class="form-control">
+                    <select id="courseCategory" name="courseCategory" class="form-control rounded-0">
                         <?php foreach ($categories as $category): ?>
                             <option value="<?= $category['id'] ?>" <?php echo $category['id'] == $course[0]['category_id'] ? " selected" : ""; ?>><?= $category['name'] ?></option>
                         <?php endforeach;  ?>
                     </select><br>
 
                     <label for="content" class="form-label">Contenu :</label>
-                    <textarea id="content" name="content" class="form-control">
+                    <textarea id="content" name="content" class="form-control rounded-0 ">
                         <?= $course[0]['content'] ?>
                     </textarea><br>
 
-                    <button type="submit" class="btn btn-primary">Modifier</button>
+                    <button type="submit" class="btn rounded-0 btn-primary">Modifier</button>
                 </form>
             </div>
             </main>

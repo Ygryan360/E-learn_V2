@@ -20,6 +20,7 @@ $title = $ctgName['name'];
 // Header
 require_once 'dashboard_header.php';
 // sideBar
+$categoryIndex = $ctgName['name'];
 require_once 'sidebar.php';
 ?>
 <div class="album py-3">

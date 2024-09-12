@@ -19,8 +19,8 @@ if (!empty($_POST)) {
         $addCategoryQuery = "INSERT INTO `categories` (`id`, `name`, `description`, `author_id`, `added_date`) VALUES (NULL, :name, :description, :author_id, :add_date)";
         $insertStatment = $pdo->prepare($addCategoryQuery);
         $insertStatment->execute([
-            'name' => addslashes($postData['categoryName']),
-            'description' => addslashes($postData['categoryDescription']),
+            'name' => $postData['categoryName'],
+            'description' => $postData['categoryDescription'],
             'author_id' => $_SESSION['user_id'],
             'add_date' => date("Y-m-d"),
         ]);
@@ -226,7 +226,10 @@ if (!empty($_POST)) {
         <div class="row">
             <!-- sideBar -->
             <?php require_once 'sidebar.php' ?>
-            <h1 class="text-center my-3">Ajouter une nouvelle catégorie</h1>
+            <div class="container">
+                <h1 class="my-3 fw-semibold">Ajouter une nouvelle catégorie</h1>
+            </div>
+
             <div class="container my-3 card p-3 course-shadow">
                 <?php if(isset($error)): ?>
                     <div class="alert alert-danger">

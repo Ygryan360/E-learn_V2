@@ -9,10 +9,10 @@ if (!empty($_POST)) {
     $query = "INSERT INTO `users` (`id`, `username`, `phone`, `email`, `password`, `role`, `register_date`) VALUES (NULL, :username, :phone, :email, :password, 'student', :register_date)";
     $pdostatment = $pdo->prepare($query);
     $pdostatment->execute([
-        'username' => addslashes($_POST['username']),
-        'phone' => addslashes($_POST['number']),
-        'email' => addslashes($_POST['email']),
-        'password' => addslashes($_POST['password']),
+        'username' => $_POST['username'],
+        'phone' => $_POST['number'],
+        'email' => $_POST['email'],
+        'password' => $_POST['password'],
         'register_date' => date("Y-m-d")
     ]);
     $pdostatment->closeCursor();
