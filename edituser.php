@@ -22,7 +22,6 @@ if (!empty($_POST)) {
         'role' => $newRole,
     ]);
     $updateStatment->closeCursor();
-    $_SESSION['username'] = $newUsername;
     $succes = "Profil Modifié avec succès !";
 }
 
