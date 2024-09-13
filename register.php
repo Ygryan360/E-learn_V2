@@ -16,7 +16,8 @@ if (!empty($_POST)) {
         'register_date' => date("Y-m-d")
     ]);
     $pdostatment->closeCursor();
-    redirectToLogin();
+    $url = 'login.php?n=1';
+    redirectToUrl($url);
 }
 ?>
 
