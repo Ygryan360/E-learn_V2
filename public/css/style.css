@@ -1,0 +1,242 @@
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter-VariableFont_slnt\,wght.ttf);
+}
+
+/* 
+* Déclaration des variables
+*/
+:root {
+  --steel-pink: #c200c8ff;
+  --blue-dark: #085ebfff;
+  --footer-dark: rgb(3, 47, 97);
+  --black: #080705;
+  --black-2: #121212;
+  --white-blue: #0077d0ff;
+  --text-secondary: #474747;
+  --light-text: #ddd;
+  --text-font: "Inter", sans-serif;
+  --bg-second: #f5f6fa;
+  --text-color: #202020;
+  --event-radius: 4px 0 0 4px !important;
+}
+
+/*
+* Initialisation
+*/
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+body{
+  font-weight: 400;
+}
+/*
+* Classes personnalisées
+*/
+.bg-second{
+  background-color: var(--bg-second);
+}
+.bg-blanc{ 
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.succes-div {
+  border: 0;
+  border-radius: var(--event-radius);
+  border-left: 4px #00ff00 solid;
+  color: #0a3622;
+  background-color: #00ff0015;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden; /* Assure que l'élément est caché avant l'animation */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, visibility 0.6s ease-out;
+}
+
+.fade-in-visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible; /* Rend l'élément visible quand l'animation commence */
+}
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.fade-in-up.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.course-header{
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 4px;
+  align-items: center;
+}
+.course-header h1{
+  margin: 0;
+  color: var(--steel-pink);
+  font-weight: 700;
+  font-size: 2rem;
+}
+.course-header p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 
+* Barre de navigation
+*/
+header{
+  box-shadow: 0 0 10px #00000020;
+}
+
+header a span{
+ font-weight: 800;
+ color: var(--steel-pink);
+}
+header a img{
+  height: 3rem;
+  margin-right: 1rem;
+}
+
+/* 
+* Page d'accueil no auth
+*/
+.welcome{
+  height: 90vh;
+  min-height: 500px;
+  justify-content: center;
+  flex-direction: column;
+  background-image: url(../img/Université-de-Lomé-Togo-orientation-bacheliers.jpg);
+  background-size: cover;
+  backdrop-filter: blur(100px);
+}
+.welcome__title{
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.welcome__title span{
+  background-color: var(--steel-pink);
+  font-weight: 800;
+  padding: 0 1rem;
+}
+.welcome__text{
+  font-size: 1.5rem;
+  color: var(--steel-pink);
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+/* 
+* Inscription et connexion
+*/
+.gotologin{
+  flex-direction: column;
+  text-align: center;
+  background-color: var(--bg-second);
+}
+.gotologin__title{
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+.gotologin__text{
+  color: var(--text-secondary);
+}
+.gotologin__box{
+  margin: 2rem 0;
+  justify-content: center;
+}
+.gotologin__box__item{
+  border-radius: 4px;
+  background-color: #fff;  
+  box-shadow: 0 0 10px rgb(3, 47, 97, 0.20);
+  width: 250px;
+}
+.gotologin__box__item svg{
+  height: 3rem;
+  width: 3rem;
+}
+.gotologin__box__item h2{
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 1.5rem;
+}
+.gotologin__box__item p{
+  color: var(--text-secondary);
+}
+
+/* 
+* Footer
+*/
+footer{
+  padding: 3rem;
+  justify-content: space-between;
+  background-color: var(--footer-dark);
+  color: var(--light-text);
+  font-size: 1rem;
+  align-items: center;
+}
+#scrollToTop{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  height: 40px;
+  width: 40px;
+  border: 0;
+  border-radius: 4px;
+  color: #fff;
+  background-color: var(--steel-pink);
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  margin-left: 1rem;
+}
+#scrollToTop:hover{
+  background-color: var(--white-blue);
+}
+#scrollToTop:active{
+  background-color: var(--steel-pink);
+}
+
+
+
+/*
+* Responsivité
+*/
+@media all and (max-width: 608px) {
+
+  .welcome__title{
+    font-size: 2rem;
+    text-align: center;
+    word-wrap: break-word;
+  }
+
+  footer div{
+    flex-direction: column;
+  }
+
+}
+.admin-item-container{
+  background-color: rgba(193, 0, 200, 0.137);
+  width: 4rem;
+  height: 4rem;
+  padding: 1rem;
+  border-radius: 4px;
+}
+.admin-item{
+  color: var(--steel-pink);
+  height: 2rem !important;
+  width: 2rem !important;
+}
+
